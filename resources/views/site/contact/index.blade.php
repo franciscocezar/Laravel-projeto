@@ -8,17 +8,34 @@
             <section class="contact__options">
 
                 <form class="contact__form" action="{{ route('site.contact.form') }}" method="POST">
+
+                    @if (session('success'))
+                        <div>
+                            {{ session('message')}}
+                        </div>
+                        
+                    @endif
+
                     @csrf
                     <label for="name">Nome completo</label>
-                    <input id="name" name="name" type="text" required tabindex="1" placeholder="Ex: José da Silva" autofocus>
+                    <input id="name" name="name" type="text" tabindex="1" placeholder="Ex: José da Silva" autofocus value="{{ old('name') }}">
+                    @error('name')
+                        <div> {{ $message }} </div>   
+                    @enderror
 
                     <label for="email">Email</label>
-                    <input id="email" name="email" type="email" required tabindex="2" placeholder="Ex: email@email.com.br">
+                    <input id="email" name="email" type="text" tabindex="2" placeholder="Ex: email@email.com.br" value="{{ old('email') }}">
+                    @error('email')
+                        <div> {{ $message }} </div>   
+                    @enderror
 
                     <label for="message">Mensagem</label>
-                    <textarea id="message" name="message"  required tabindex="3"  cols="20" rows="4" placeholder="Digite aqui..."></textarea>
+                    <textarea id="message" name="message"  tabindex="3"  cols="20" rows="4" placeholder="Digite aqui...">{{ old('message') }}</textarea>
+                    @error('message')
+                        <div> {{ $message }} </div>   
+                    @enderror
 
-                    <button class="button button_primary" type="submit">Enviar mensagem</button>
+                    <button class="button button_primary" type="submit">Enviar mensagem</button >
                 </form>
 
                 <div class="contact__infos">
